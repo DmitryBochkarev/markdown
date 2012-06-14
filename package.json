@@ -1,0 +1,17 @@
+{
+  "name": "markdown-gfm",
+  "description": "markdown parser with implemented github flavored markdown",
+  "author": "Dmitry Bochkarev <dimabochkarev@gmail.com>",
+  "version": "0.0.0",
+  "main": "./markdown.js",
+  "dependencies": {},
+  "devDependencies": {
+    "coffee-script": ">=1.3.3",
+    "pegjs": ">=0.7.0",
+    "uglify-js": ">=1.2.5"
+  },
+  "optionalDependencies": {},
+  "engines": {
+    "node": ">=0.4.0"
+  }
+}

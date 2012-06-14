@@ -1,0 +1,277 @@
+<!DOCTYPE html><html><head><style>/*
+
+Original style from softwaremaniacs.org (c) Ivan Sagalaev <Maniac@SoftwareManiacs.Org>
+
+*/
+
+pre code {
+  display: block; padding: 0.5em;
+  background: #F0F0F0;
+}
+
+span.code {
+  background: #CACACA;
+}
+
+pre code,
+pre .ruby .subst,
+pre .tag .title,
+pre .lisp .title,
+pre .nginx .title {
+  color: black;
+}
+
+pre .string,
+pre .title,
+pre .constant,
+pre .parent,
+pre .tag .value,
+pre .rules .value,
+pre .rules .value .number,
+pre .preprocessor,
+pre .ruby .symbol,
+pre .ruby .symbol .string,
+pre .ruby .symbol .keyword,
+pre .ruby .symbol .keymethods,
+pre .instancevar,
+pre .aggregate,
+pre .template_tag,
+pre .django .variable,
+pre .smalltalk .class,
+pre .addition,
+pre .flow,
+pre .stream,
+pre .bash .variable,
+pre .apache .tag,
+pre .apache .cbracket,
+pre .tex .command,
+pre .tex .special,
+pre .erlang_repl .function_or_atom,
+pre .markdown .header {
+  color: #800;
+}
+
+pre .comment,
+pre .annotation,
+pre .template_comment,
+pre .diff .header,
+pre .chunk,
+pre .markdown .blockquote {
+  color: #888;
+}
+
+pre .number,
+pre .date,
+pre .regexp,
+pre .literal,
+pre .smalltalk .symbol,
+pre .smalltalk .char,
+pre .go .constant,
+pre .change,
+pre .markdown .bullet,
+pre .markdown .link_url {
+  color: #080;
+}
+
+pre .label,
+pre .javadoc,
+pre .ruby .string,
+pre .decorator,
+pre .filter .argument,
+pre .localvars,
+pre .array,
+pre .attr_selector,
+pre .important,
+pre .pseudo,
+pre .pi,
+pre .doctype,
+pre .deletion,
+pre .envvar,
+pre .shebang,
+pre .apache .sqbracket,
+pre .nginx .built_in,
+pre .tex .formula,
+pre .erlang_repl .reserved,
+pre .input_number,
+pre .markdown .link_label,
+pre .vhdl .attribute {
+  color: #88F
+}
+
+pre .keyword,
+pre .id,
+pre .phpdoc,
+pre .title,
+pre .built_in,
+pre .aggregate,
+pre .css .tag,
+pre .javadoctag,
+pre .phpdoc,
+pre .yardoctag,
+pre .smalltalk .class,
+pre .winutils,
+pre .bash .variable,
+pre .apache .tag,
+pre .go .typename,
+pre .tex .command,
+pre .markdown .strong,
+pre .request,
+pre .status {
+  font-weight: bold;
+}
+
+pre .markdown .emphasis {
+  font-style: italic;
+}
+
+pre .nginx .built_in {
+  font-weight: normal;
+}
+
+pre .coffeescript .javascript,
+pre .xml .css,
+pre .xml .javascript,
+pre .xml .vbscript,
+pre .tex .formula {
+  opacity: 0.5;
+}
+</style></head><body><h1>batman.js</h1><p><a href="http://batmanjs.org/" title="">batman.js</a> is a framework for building rich single-page browser applications. It is written in <a href="http://jashkenas.github.com/coffee-script/" title="">CoffeeScript</a> and its API is developed with CoffeeScript in mind, but of course you can use plain old JavaScript too.</p><h4>It&#39;s got:</h4><ul><li>a stateful MVC architecture</li><li>a powerful binding system</li><li>routable controller actions</li><li>pure HTML views</li><li>toolchain support built on <a href="http://nodejs.org" title="">node.js</a> and <a href="http://jashkenas.github.com/coffee-script/#cake" title="">cake</a></li></ul><p>The APIs are heavily inspired by <a href="http://rubyonrails.org/" title="">Rails</a> and designed to make Rails devs feel right at home.</p><p>We&#39;re targeting Chrome, Safari 4+, Firefox 3+, and IE 7+ for compatibility, although some of those require you to include <a href="https://github.com/kriskowal/es5-shim" title="">es5shim</a>.</p><table>
+
+</table><h4>Here&#39;s some code:</h4><pre><code lang="coffeescript"><span class="keyword">class</span> Shopify <span class="keyword">extends</span> Batman.App
+  @root <span class="string">'products#index'</span>
+
+  @resources <span class="string">'products'</span>
+
+<span class="keyword">class</span> Shopify.Product <span class="keyword">extends</span> Batman.Model
+  @persist Batman.RestStorage
+
+<span class="keyword">class</span> Shopify.ProductsController <span class="keyword">extends</span> Batman.Controller
+  index: ->
+
+  show: (params) ->
+    Shopify.Product.find params.id, (err, product) =>
+      @set(<span class="string">'product'</span>, product)</code></pre><h4>views/products/index.html</h4><pre><code lang="html"><span class="tag">&lt;<span class="title">ul</span> <span class="attribute">id</span>=<span class="value">"products"</span>></span>
+  <span class="tag">&lt;<span class="title">li</span> <span class="attribute">data-foreach-product</span>=<span class="value">"Product.all"</span> <span class="attribute">data-mixin</span>=<span class="value">"animation"</span>></span>
+    <span class="tag">&lt;<span class="title">a</span> <span class="attribute">data-route</span>=<span class="value">"product"</span> <span class="attribute">data-bind</span>=<span class="value">"product.name"</span>></span>name will go here<span class="tag">&lt;/<span class="title">a</span>></span>
+  <span class="tag">&lt;/<span class="title">li</span>></span>
+
+  <span class="tag">&lt;<span class="title">li</span>></span><span class="tag">&lt;<span class="title">span</span> <span class="attribute">data-bind</span>=<span class="value">"'product' | pluralize products.length"</span>></span><span class="tag">&lt;/<span class="title">span</span>></span><span class="tag">&lt;/<span class="title">li</span>></span>
+<span class="tag">&lt;/<span class="title">ul</span>></span></code></pre><h2>Installation</h2><p>If you haven&#39;t already, you&#39;ll need to install <a href="http://nodejs.org" title="">node.js</a> (0.4.x for now, 0.5.x support forthcoming) and <a href="http://npmjs.org/" title="">npm</a>. Then:</p><pre><code lang="bash">npm install -g batman</code></pre><p>Generate a new batman.js app somewhere, called my_app:</p><pre><code lang="bash">cd ~/code
+batman new my_app</code></pre><p>Fire it up:</p><pre><code lang="bash">cd my_app
+batman server <span class="comment"># (or just "batman s")</span></code></pre><p>Now visit <a href="http://localhost:1047" title="">http://localhost:1047</a> and start playing around!</p><h2>The Basics</h2><p>Most of the classes you work with in your app code will descend from <span class="code">Batman.Object</span>, which gives you some nice things that are used extensively by the rest of the system.</p><h3>Events</h3><p>Events in batman.js are pretty simple. Handling an event is like subscribing to a named channel on a particular object, and firing an event is like publishing an argument list (which might be empty) to all subscribers of that channel.</p><pre><code lang="coffeescript"><span class="keyword">class</span> BatBelt.Gadget <span class="keyword">extends</span> Batman.Object
+  constructor: -> @usesRemaining = <span class="number">5</span>
+  use: (howManyTimes) ->
+    <span class="keyword">if</span> howManyTimes &lt;= @usesRemaining
+      @usesRemaining -= howManyTimes
+      @fire(<span class="string">'use'</span>, howManyTimes)</code></pre><p>You can use the <span class="code">on</span> method to register handler functions which then get called whenever <span class="code">fire</span> is called for the specified event name. The handlers get whichever extra arguments were passed to <span class="code">fire</span> after the event name itself:</p><pre><code lang="coffeescript">gadget.<span class="literal">on</span> <span class="string">'use'</span>, (howManyTimes) ->
+  console.log <span class="string">"gadget was used <span class="subst">#{howManyTimes}</span> times!"</span>
+gadget.use(<span class="number">2</span>)
+<span class="comment"># console output: "gadget was used 2 times!"</span></code></pre><h3>Properties</h3><p>The <span class="code">observe</span> function is used to observe changes to properties. This forms the basis of the binding system. Here&#39;s a simple example:</p><pre><code lang="coffeescript">gadget.observe <span class="string">'name'</span>, (newVal, oldVal) ->
+  console.log <span class="string">"name changed from <span class="subst">#{oldVal}</span> to <span class="subst">#{newVal}</span>!"</span>
+gadget.set <span class="string">'name'</span>, <span class="string">'Batarang'</span>
+<span class="comment"># console output: "name changed from undefined to Batarang!"</span></code></pre><p>When you <span class="code">observe</span> a property, you are really just handling its &#34;change&#34; event, which happens to get fired with the new and old values.</p><p>Of course you can also <span class="code">get</span> properties to return their values, and if you want to remove them completely then you can <span class="code">unset</span> them:</p><pre><code lang="coffeescript">gadget.get <span class="string">'name'</span>
+<span class="comment"># returns: 'Batarang'</span>
+gadget.unset <span class="string">'name'</span>
+<span class="comment"># console output: "name changed from Batarang to undefined!"</span></code></pre><p>By default, these properties are stored like plain old JavaScript properties: that is, <span class="code">gadget.name</span> would return &#34;Batarang&#34; just like you&#39;d expect. But if you set the gadget&#39;s name with <span class="code">gadget.name = &#39;Shark Spray&#39;</span>, then the observer function you set on <span class="code">gadget</span> will not fire. So when you&#39;re working with batman.js properties, use <span class="code">get</span>/<span class="code">set</span>/<span class="code">unset</span> to read/write/delete them.</p><h3>Custom Accessors</h3><p>What&#39;s the point of using <span class="code">gadget.get &#39;name&#39;</span> instead of just <span class="code">gadget.name</span>? Well, batman.js properties don&#39;t always correspond with vanilla JS properties. Let&#39;s write a <span class="code">Box</span> class with a custom getter for its volume:</p><pre><code lang="coffeescript"><span class="keyword">class</span> Box <span class="keyword">extends</span> Batman.Object
+  constructor: (@length, @width, @height) ->
+  @accessor <span class="string">'volume'</span>,
+    get: (key) -> @get(<span class="string">'length'</span>) * @get(<span class="string">'width'</span>) * @get(<span class="string">'height'</span>)
+
+box = <span class="keyword">new</span> Box(<span class="number">16</span>,<span class="number">16</span>,<span class="number">12</span>)
+box.get <span class="string">'volume'</span>
+<span class="comment"># returns 3072</span></code></pre><p>The really cool thing about this is that, because we used <span class="code">@get</span> to access the component properties of <span class="code">volume</span>, batman.js can keep track of those dependencies and let us observe the <span class="code">volume</span> directly:</p><pre><code lang="coffeescript">box.observe <span class="string">'volume'</span>, (newVal, oldVal) ->
+  console.log <span class="string">"volume changed from <span class="subst">#{oldVal}</span> to <span class="subst">#{newVal}</span>!"</span>
+box.set <span class="string">'height'</span>, <span class="number">6</span>
+<span class="comment"># console output: "volume changed from 3072 to 1536!"</span></code></pre><p>The box&#39;s <span class="code">volume</span> is a read-only attribute here, because we only provided a getter in the accessor we defined. Here&#39;s a <span class="code">Person</span> class with a (rather naive) read-write accessor for their name:</p><pre><code lang="coffeescript"><span class="keyword">class</span> Person <span class="keyword">extends</span> Batman.Object
+  constructor: (name) -> @set <span class="string">'name'</span>, name
+  @accessor <span class="string">'name'</span>,
+    get: (key) -> [@get(<span class="string">'firstName'</span>), @get(<span class="string">'lastName'</span>)].join(<span class="string">' '</span>)
+    set: (key, val) ->
+      [first, last] = val.split(<span class="string">' '</span>)
+      @set <span class="string">'firstName'</span>, first
+      @set <span class="string">'lastName'</span>, last
+    unset: (key) ->
+      @unset <span class="string">'firstName'</span>
+      @unset <span class="string">'lastName'</span></code></pre><h3>Keypaths</h3><p>If you want to get at properties of properties, use keypaths:</p><pre><code lang="coffeescript">employee.get <span class="string">'team.manager.name'</span></code></pre><p>This does what you expect and is pretty much the same as <span class="code">employee.get(&#39;team&#39;).get(&#39;manager&#39;).get(&#39;name&#39;)</span>. If you want to observe a deep keypath for changes, go ahead:</p><pre><code lang="coffeescript">employee.observe <span class="string">'team.manager.name'</span>, (newVal, oldVal) ->
+  console.log <span class="string">"you now answer to <span class="subst">#{newVal || 'nobody'}</span>!"</span>
+manager = employee.get <span class="string">'team.manager'</span>
+manager.set <span class="string">'name'</span>, <span class="string">'Bill'</span>
+<span class="comment"># console output: "you now answer to Bill!"</span></code></pre><p>If any component of the keypath is set to something that would change the overall value, then observers will fire:</p><pre><code lang="coffeescript">employee.set <span class="string">'team'</span>, larrysTeam
+<span class="comment"># console output: "you now answer to Larry!"</span>
+employee.team.unset <span class="string">'manager'</span>
+<span class="comment"># console output: "you now answer to nobody!"</span>
+employee.set <span class="string">'team'</span>, jessicasTeam
+<span class="comment"># console output: "you now answer to Jessica!"</span></code></pre><p>batman.js&#39;s dependency tracking system makes sure that no matter how weird your object graph gets, your observers will fire exactly when they should.</p><h2>Architecture</h2><p>The MVC architecture of batman.js fits together like this:</p><ul><li>Controllers are persistent objects which render the views and give them mediated access to the model layer.</li><li>Views are written in pure HTML, and use <span class="code">data-*</span> attributes to create bindings with model data and event handlers exposed by the controllers.</li><li>Models have validations, lifecycle events, a built-in identity map, and can use arbitrary storage backends (<span class="code">Batman.LocalStorage</span>, <span class="code">Batman.RestStorage</span>, and <span class="code">Batman.RailsStorage</span> are included).</li></ul><p>A batman.js application is served up in one page load, followed by asynchronous requests for various resources as the user interacts with the app. Navigation within the app uses <a href="https://developer.mozilla.org/en/DOM/Manipulating_the_browser_history#Adding_and_modifying_history_entries" title="">pushState</a> where supported, otherwise falling back to <a href="http://www.w3.org/QA/2011/05/hash_uris.html" title="">hash-bang fragment identifers</a>.</p><h3>The App Class</h3><p>Sitting in front of everything else is a subclass of <span class="code">Batman.App</span> which represents your application as a whole and acts as a namespace for your other app classes. The app class never gets instantiated; your main interactions with it are using macros in its class definition, and calling <span class="code">run()</span> on it when it&#39;s time to fire up your app.</p><p>Here&#39;s a simple app class:</p><pre><code lang="coffeescript"><span class="keyword">class</span> BatBelt <span class="keyword">extends</span> Batman.App
+  @controller <span class="string">'app'</span>, <span class="string">'gadgets'</span>
+  @model <span class="string">'gadget'</span>
+
+  @root <span class="string">'app#index'</span>
+  @route <span class="string">'faq/:questionID'</span>, <span class="string">'app#faq'</span>
+  @resources <span class="string">'gadgets'</span></code></pre><p>The calls to <span class="code">@controller</span> and <span class="code">@model</span> load external app classes with XHRs. For the controllers, this ends up fetching <span class="code">/controllers/app_controller.coffee</span> and <span class="code">/controllers/gadgets_controller.coffee</span>. The gadget model gets loaded from <span class="code">/models/gadget.coffee</span>.</p><h4>Routes</h4><p>Routes are defined in a few different ways.</p><p><span class="code">@route</span> takes two strings, one representing a path pattern and the other representing a controller action. In the above example, <span class="code">&#39;faq/:questionID&#39;</span> matches any path starting with &#34;/faq/&#34; and having one other segment. That segment is then passed as a named param to the controller action function specified by the second string argument.</p><p>For the FAQ route, <span class="code">&#39;app#faq&#39;</span> specifies the <span class="code">faq</span> function on <span class="code">BatBelt.AppController</span>, which should take a <span class="code">params</span> argument and do something sensible with <span class="code">params.questionID</span>.</p><p><span class="code">@root &#39;app#index&#39;</span> is just a shorthand for <span class="code">@route &#39;/&#39;, &#39;app#index&#39;</span>.</p><p>The <span class="code">@resources</span> macro takes a resource name which should ideally be the underscored-pluralized name of one of your models. It sets up three routes, as if you&#39;d used the <span class="code">@route</span> macro like so:</p><pre><code lang="coffeescript">@route <span class="string">'gadgets'</span>, <span class="string">'gadgets#index'</span>
+@route <span class="string">'gadgets/new'</span>, <span class="string">'gadgets#new'</span>
+@route <span class="string">'gadgets/:id'</span>, <span class="string">'gadgets#show'</span>
+@route <span class="string">'gadgets/:id/edit'</span>, <span class="string">'gadgets#edit'</span></code></pre><p><span class="code">@resources</span> can also take an array of labels to set up routing for multiple models at once:</p><pre><code lang="coffeescript">@resources [<span class="string">'stores'</span>, <span class="string">'products'</span>, <span class="string">'customers'</span>]</code></pre><p>In addition to setting up these routes, the call to <span class="code">@resources</span> keeps track of the fact that the <span class="code">Gadget</span> model can be accessed in these ways. This lets you load these routes in your controllers or views by using model instances and classes on their own:</p><pre><code lang="coffeescript"><span class="keyword">class</span> BatBelt.GadgetsController <span class="keyword">extends</span> Batman.Controller
+  someEventHandler: (node, event) ->
+    BatBelt.Gadget.find <span class="number">1</span>, (err, gadget) =>
+      @redirect gadget <span class="keyword">unless</span> err? <span class="comment"># redirects to "/gadgets/1"</span>
+  someOtherHandler: (node, event) ->
+    @redirect BatBelt.Gadget <span class="comment"># redirects to "/gadgets"</span></code></pre><h3>Controllers</h3><p>batman.js controllers are singleton classes with one or more instance methods that can serve as routable actions. Because they&#39;re singletons, instance variables persist as long as the app is running.</p><pre><code lang="coffeescript"><span class="keyword">class</span> BatBelt.AppController <span class="keyword">extends</span> Batman.Controller
+  index: ->
+  faq: (params) ->
+    @set(<span class="string">'question'</span>, @get(<span class="string">'questions'</span>).get(params.questionID)</code></pre><p>Now when you navigate to <span class="code">/#!/faq/what-is-art</span>, the dispatcher runs this <span class="code">faq</span> action with <span class="code">{questionID: &#34;what-is-art&#34;}</span>. It also makes an implicit call to <span class="code">@render</span>, which by default will look for a view at <span class="code">/views/app/faq.html</span>. The view is rendered within the main content container of the page, which is designated by setting <span class="code">data-yield=&#34;main&#34;</span> on some tag in the layout&#39;s HTML. You can prevent this implicit rendering by calling <span class="code">@render false</span> in your action.</p><p>Controllers are also a fine place to put event handlers used by your views. Here&#39;s one that uses <a href="http://jquery.com/" title="">jQuery</a> to toggle a CSS class on a button:</p><pre><code lang="coffeescript"><span class="keyword">class</span> MyApp.BigRedButtonController <span class="keyword">extends</span> Batman.Controller
+  index: ->
+
+  buttonWasClicked: (node, event) ->
+    $(node).toggleClass(<span class="string">'activated'</span>)</code></pre><p>If you want to redirect to some route, you can use <span class="code">@redirect</span>:</p><pre><code lang="coffeescript">buttonWasClicked: (node, event) ->
+  $(node).toggleClass(<span class="string">'activated'</span>)
+  @redirect <span class="string">'/apocalypse/'</span></code></pre><h3>Views</h3><p>You write views in plain HTML. These aren&#39;t templates in the usual sense: the HTML is rendered in the page as-is, and you use <span class="code">data-*</span> attributes to specify how different parts of the view bind to your app&#39;s data. Here&#39;s a very small view which displays a user&#39;s name and avatar:</p><pre><code lang="html"><span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"user"</span>></span>
+  <span class="tag">&lt;<span class="title">img</span> <span class="attribute">data-bind-src</span>=<span class="value">"user.avatarURL"</span> /></span>
+  <span class="tag">&lt;<span class="title">p</span> <span class="attribute">data-bind</span>=<span class="value">"user.name"</span>></span><span class="tag">&lt;/<span class="title">p</span>></span>
+<span class="tag">&lt;/<span class="title">div</span>></span></code></pre><p>The <span class="code">data-bind</span> attribute on the <span class="code">&lt;p&gt;</span> tag sets up a binding between the user&#39;s <span class="code">name</span> property and the content of the tag. The <span class="code">data-bind-src</span> attribute on the <span class="code">&lt;img&gt;</span> tag binds the user&#39;s <span class="code">avatarURL</span> property to the <span class="code">src</span> attribute of the tag. You can do the same thing for arbitrary attribute names, so for example <span class="code">data-bind-href</span> would bind to the <span class="code">href</span> attribute.</p><p>batman.js uses a bunch of these data attributes for different things:</p><h4>Binding properties</h4><ul><li><span class="code">data-bind=&#34;foo.bar&#34;</span>: for most tags, this defines a one-way binding with the contents of the node: when the given property <span class="code">foo.bar</span> changes, the contents of the node are set to that value. When <span class="code">data-bind</span> is set on a form input tag, a <em>two-way</em> binding is defined with the <em>value</em> of the node, such that any changes from the user will update the property in realtime.</li></ul><ul><li><span class="code">data-bind-foo=&#34;bar.baz&#34;</span>: defines a one-way binding from the given property <span class="code">bar.baz</span> to any attribute <span class="code">foo</span> on the node.</li></ul><ul><li><span class="code">data-foreach-bar=&#34;foo.bars&#34;</span>: used to render a collection of zero or more items. If the collection descends from <span class="code">Batman.Set</span>, then the DOM will be updated when items are added or removed.</li></ul><h4>Handling DOM events</h4><ul><li><span class="code">data-event-click=&#34;foo.bar&#34;</span>: when this node is clicked, the function specified by the keypath <span class="code">foo.bar</span> is called with the node object as the first argument, and the click event as the second argument.</li></ul><ul><li><span class="code">data-event-change=&#34;foo.bar&#34;</span>: like <span class="code">data-event-click</span>, but fires on change events.</li></ul><ul><li><span class="code">data-event-submit=&#34;foo.bar&#34;</span>: like <span class="code">data-event-click</span>, but fires either when a form is submitted (in the case of <span class="code">&lt;form&gt;</span> nodes) or when a user hits the enter key when an <span class="code">&lt;input&gt;</span> or <span class="code">&lt;textarea&gt;</span> has focus.</li></ul><h4>Managing contexts</h4><ul><li><span class="code">data-context=&#34;foo.bar&#34;</span>: pushes a new context onto the context stack for children of this node. If the context is <span class="code">foo.bar</span>, then children of this node may access properties on <span class="code">foo.bar</span> directly, as if they were properties of the controller.</li></ul><h4>Rendering Views</h4><ul><li><span class="code">data-yield=&#34;identifier&#34;</span>: used in your layout to specify the locations that other views get rendered into when they are rendered. By default, a controller action renders each whole view into whichever node is set up to yield <span class="code">&#34;main&#34;</span>. If you want some content in a view to be rendered into a different <span class="code">data-yield</span> node, you can use <span class="code">data-contentfor</span>.</li></ul><ul><li><span class="code">data-contentfor=&#34;identifier&#34;</span>: when the view is rendered into your layout, the contents of this node will be rendered into whichever node has <span class="code">data-yield=&#34;identifier&#34;</span>. For example, if your layout has <span class="code">&#34;main&#34;</span> and <span class="code">&#34;sidebar&#34;</span> yields, then you may put a <span class="code">data-contentfor=&#34;sidebar&#34;</span> node in a view and it will be rendered in the sidebar instead of the main content area. If multiple <span class="code">data-contentfor</span> nodes with the same identifier are present in a view, their contents will be concatenated in the corresponding <span class="code">data-yield</span> node.</li></ul><ul><li><span class="code">data-partial=&#34;shared/sidebar&#34;</span>: renders the view at the path <span class="code">/views/shared/sidebar.html</span> within this node. Note that <span class="code">/views/</span> is prepended.</li></ul><ul><li><span class="code">data-route=&#34;/some/path&#34;</span> or <span class="code">data-route=&#34;some.model&#34;</span>: loads a route when this node is clicked. The route can either be specified by a path beginning with a slash &#34;/&#34;, or by a property leading to either a model instance (resulting in a resource&#39;s &#34;show&#34; action) or a model class (for the resource&#39;s &#34;index&#34; action).</li></ul><h3>Models</h3><p>batman.js models:</p><ul><li>can persist to various storage backends</li><li>only serialize a defined subset of their properties as JSON</li><li>use a state machine to expose lifecycle events</li><li>can validate with synchronous or asynchronous operations</li></ul><h4>Attributes</h4><p>A model object may have arbitrary properties set on it, just like any JS object. Only some of those properties are serialized and persisted to its storage backends, however. You define persisted attributes on a model with the <span class="code">encode</span> macro:</p><pre><code lang="coffeescript">  <span class="keyword">class</span> Article <span class="keyword">extends</span> Batman.Model
+    @encode <span class="string">'body_html'</span>, <span class="string">'title'</span>, <span class="string">'author'</span>, <span class="string">'summary_html'</span>, <span class="string">'blog_id'</span>, <span class="string">'id'</span>, <span class="string">'user_id'</span>
+    @encode <span class="string">'created_at'</span>, <span class="string">'updated_at'</span>, <span class="string">'published_at'</span>, Batman.Encoders.railsDate
+    @encode <span class="string">'tags'</span>,
+      encode: (tagSet) -> tagSet.toArray().join(<span class="string">', '</span>)
+      decode: (tagString) -> <span class="keyword">new</span> Batman.Set(tagString.split(<span class="string">', '</span>)...)</code></pre><p>Given one or more strings as arguments, <span class="code">@encode</span> will register these properties as persisted attributes of the model, to be serialized in the model&#39;s <span class="code">toJSON()</span> output and extracted in its <span class="code">fromJSON()</span>. Properties that aren&#39;t specified with <span class="code">@encode</span> will be ignored for both serialization and deserialization. If an optional coder object is provided as the last argument, its <span class="code">encode</span> and <span class="code">decode</span> functions will be used by the model for serialization and deserialization, respectively.</p><p>By default, a model&#39;s primary key (the unchanging property which uniquely indexes its instances) is its <span class="code">id</span> property. If you want your model to have a different primary key, specify the name of the key on the <span class="code">primaryKey</span> class property:</p><pre><code lang="coffeescript"><span class="keyword">class</span> User <span class="keyword">extends</span> Batman.Model
+  @primaryKey: <span class="string">'handle'</span>
+  @encode <span class="string">'handle'</span>, <span class="string">'email'</span></code></pre><h4>States</h4><ul><li><span class="code">empty</span>: a new model instance remains in this state until some persisted attribute is set on it.</li><li><span class="code">loading</span>: entered when the model instance&#39;s <span class="code">load()</span> method is called.</li><li><span class="code">loaded</span>: entered after the model&#39;s storage adapter has completed loading updated attributes for the instance. Immediately transitions to the <span class="code">clean</span> state.</li><li><span class="code">dirty</span>: entered when one of the model&#39;s persisted attributes changes.</li><li><span class="code">validating</span>: entered when the validation process has started.</li><li><span class="code">validated</span>: entered when the validation process has completed. Immediately after entering this state, the model instance transitions back to either the <span class="code">dirty</span> or <span class="code">clean</span> state.</li><li><span class="code">saving</span>: entered when the storage adapter has begun saving the model.</li><li><span class="code">saved</span>: entered after the model&#39;s storage adapter has completed saving the model. Immediately transitions to the <span class="code">clean</span> state.</li><li><span class="code">clean</span>: indicates that none of an instance&#39;s attributes have been changed since the model was <span class="code">saved</span> or <span class="code">loaded</span>.</li><li><span class="code">destroying</span>: entered when the model instance&#39;s <span class="code">destroy()</span> method is called.</li><li><span class="code">destroyed</span>: indicates that the storage adapter has completed destroying this instance.</li></ul><h4>Validation</h4><p>Before models are saved to persistent storage, they run through any validations you&#39;ve defined and the save is cancelled if any errors were added to the model during that process.</p><p>Validations are defined with the <span class="code">@validate</span> macro by passing it the properties to be validated and an options object representing the particular validations to perform:</p><pre><code lang="coffeescript"><span class="keyword">class</span> User <span class="keyword">extends</span> Batman.Model
+  @encode <span class="string">'login'</span>, <span class="string">'password'</span>
+  @validate <span class="string">'login'</span>, presence: <span class="literal">yes</span>, maxLength: <span class="number">16</span>
+  @validate <span class="string">'password'</span>, <span class="string">'passwordConfirmation'</span>, presence: <span class="literal">yes</span>, lengthWithin: [<span class="number">6</span>,<span class="number">255</span>]</code></pre><p>The options get their meaning from subclasses of <span class="code">Batman.Validator</span> which have been registered by adding them to the <span class="code">Batman.Validators</span> array. For example, the <span class="code">maxLength</span> and <span class="code">lengthWithin</span> options are used by <span class="code">Batman.LengthValidator</span>.</p><h4>Persistence</h4><p>To specify a storage adapter for persisting a model, use the <span class="code">@persist</span> macro in its class definition:</p><pre><code lang="coffeescript"><span class="keyword">class</span> Product <span class="keyword">extends</span> Batman.Model
+  @persist Batman.LocalStorage</code></pre><p>Now when you call <span class="code">save()</span> or <span class="code">load()</span> on a product, it will use the browser window&#39;s <a href="https://developer.mozilla.org/en/dom/storage" title="">localStorage</a> to retrieve or store the serialized data.</p><p>If you have a REST backend you want to connect to, <span class="code">Batman.RestStorage</span> is a simple storage adapter which can be subclassed and extended to suit your needs. By default, it will assume your CamelCased-singular <span class="code">Product</span> model is accessible at the underscored-pluralized &#34;/products&#34; path, with instances of the resource accessible at <span class="code">/products/:id</span>. You can override these path defaults by assigning either a string or a function-returning-a-string to the <span class="code">url</span> property of your model class (for the collection path) or to the prototype (for the member path). For example:</p><pre><code lang="coffeescript"><span class="keyword">class</span> Product <span class="keyword">extends</span> Batman.Model
+  @persist Batman.RestStorage
+  @url = <span class="string">"/admin/products"</span>
+  url: -> <span class="string">"/admin/products/<span class="subst">#{@id}</span>"</span></code></pre><h4>Associations</h4><p>Batman models support <span class="code">belongsTo</span>, <span class="code">hasOne</span>, and <span class="code">hasMany</span> associations. Here&#39;s a simple example:</p><pre><code lang="coffeescript"><span class="keyword">class</span> App.Store <span class="keyword">extends</span> Batman.Model
+  @hasMany <span class="string">'products'</span>, options
+
+<span class="keyword">class</span> App.Product <span class="keyword">extends</span> Batman.Model
+  @belongsTo <span class="string">'store'</span>, options</code></pre><p>The following options are available:</p><ul><li><em>namespace</em>: Tells Batman to look for the associated model under the provided namespace. (Defaults to <span class="code">Batman.currentApp</span>.)</li><li><em>name</em>: Tells Batman to use the given model name instead. (Defaults to an interpretation of the association&#39;s label.)</li><li><em>saveInline</em>: Tells Batman whether to encode associations as inline JSON when the base model is saved. (Defaults to <span class="code">false</span> for <span class="code">belongsTo</span>, and <span class="code">true</span> for <span class="code">hasOne</span> and <span class="code">hasMany</span>.)</li><li><em>autoload</em>: Tells Batman whether to make a request to the server the first time the association is <span class="code">get</span>ted. Defaults to true.</li></ul><p>Associations can be loaded via foreign keys or inline JSON:</p><pre><code lang="coffeescript">localStorage =
+  stores1:
+    id: <span class="number">1</span>
+    name: <span class="string">"JSON Store"</span>
+    product: {id: <span class="number">1</span>, store_id: <span class="number">1</span>, name: <span class="string">"JSON Product"</span>}
+
+  stores2:
+    id: <span class="number">2</span>
+    name: <span class="string">"Foreign Key Store"</span>
+  products3:
+    id: <span class="number">3</span>
+    store_id: <span class="number">2</span>
+    name: <span class="string">"Foreign Key Product Product"</span></code></pre><p>Association saving is done inline:</p><pre><code lang="coffeescript">store = <span class="keyword">new</span> Store name: <span class="string">"Angry Birds"</span>
+product1 = <span class="keyword">new</span> Product name: <span class="string">"Foo"</span>
+product2 = <span class="keyword">new</span> Product name: <span class="string">"Bar"</span>
+
+store.set <span class="string">'products'</span>, <span class="keyword">new</span> Batman.Set(product1, product2)
+store.save (error, record) ->
+  <span class="keyword">throw</span> error <span class="keyword">if</span> error
+  console.log localStorage[<span class="string">"stores<span class="subst">#{record.get('id')}</span>"</span>]
+  <span class="comment"># => {</span>
+  <span class="comment">#   id: ...</span>
+  <span class="comment">#   name: "Angry Birds"</span>
+  <span class="comment">#   products: [{name: "Foo", store_id: ...}, {name: "Bar", store_id: ...}]</span>
+  <span class="comment"># }</span></code></pre><p>(Notice that the products did not receive IDs. This is because association saving is non-cascading, meaning that each model needs to be saved individually to fully persist. You can always call <span class="code">toJSON</span> on a model instance to see what will be stored.)</p><p>Associations also support reloading and loaded introspection:</p><pre><code lang="coffeescript">store = <span class="keyword">new</span> Store name: <span class="string">"Angry Birds"</span>
+store.get(<span class="string">'products.loaded'</span>) <span class="comment">#=> false</span>
+store.get(<span class="string">'products'</span>).load (err, products) ->
+  <span class="keyword">throw</span> err <span class="keyword">if</span> err
+  store.get(<span class="string">'products.loaded'</span>) <span class="comment">#=> true</span></code></pre><p>Associations can be rendered via keypaths, using the same labels you use to create the association:</p><pre><code lang="html"><span class="tag">&lt;<span class="title">div</span> <span class="attribute">data-foreach-product</span>=<span class="value">"store.products"</span> <span class="attribute">data-bind</span>=<span class="value">"product.name"</span>></span><span class="tag">&lt;/<span class="title">div</span>></span></code></pre><h1>Contributing</h1><p><a href="http://travis-ci.org/Shopify/batman" title=""><img src="https://secure.travis-ci.org/Shopify/batman.png" alt="[object Object]" title=""/></a></p><p>Well-tested contributions are always welcome! Here&#39;s what you should do:</p><h4>1. Clone the repo</h4><pre><code lang="bash">git clone https://github.com/Shopify/batman.git</code></pre><h4>2. Run the tests</h4><p>You can test batman.js locally either on the command line or in the browser and both should work. Tests are written in Coffeescript using <a href="http://docs.jquery.com/QUnit#API_documentation" title="">QUnit</a>.</p><p>To run on the command line, run the following command from the project root:</p><pre><code lang="bash">cake test</code></pre><p>To run in the browser, start a web server to serve up the tests:</p><pre><code lang="bash">coffee tests/serve.coffee</code></pre><p>...then visit <span class="code">http://localhost:1047/tests/batman/test.html</span>.</p><h4>3. Write some test-driven code</h4><p>The tests are in <span class="code">tests/batman</span>. You&#39;ll need to source any new test files in <span class="code">tests/batman/test.html</span>.</p><h4>4. Create a pull request</h4><p>If it&#39;s good code that fits with the goals of the project, we&#39;ll merge it in!</p><h1>License</h1><p>batman.js is copyright 2011 by <a href="http://www.shopify.com" title="">Shopify</a>, released under the MIT License (see LICENSE for details).
+</p></body></html>

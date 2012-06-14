@@ -1,0 +1,34 @@
+<!doctype html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  
+    <title>Markdown</title>
+    <script type="text/javascript" charset="utf-8" src="../markdown.js"> </script>
+  </head>
+  <body>
+    <textarea id="editor" name="md" rows="8" cols="40" onkeyup="render()">
+* Hello
+    * hello
+    </textarea>
+    <div id="output"></div>
+    <script type="text/javascript" charset="utf-8">
+      function render() {
+        var editor = document.getElementById("editor");
+        var output = document.getElementById("output");
+        console.time("Parse took");
+        var md = Markdown(editor.value)
+        console.timeEnd("Parse took");
+        console.log(JSON.stringify(md.elements, false, 2));
+        console.time("Render took");
+        md.render(function(html){
+          console.timeEnd("Render took");
+          output.innerHTML = html;
+        });
+      };
+      window.onload = function(){
+        render();
+      };
+    </script>
+  </body>
+</html>
